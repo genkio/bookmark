@@ -7,6 +7,7 @@ interface IDataContext {
   bookmarks: IBookmark[];
   deleteBookmark: (bookmark: IBookmark) => void;
   getBookmark: (id: IBookmark["id"]) => IBookmark;
+  getTags: () => IBookmark["tags"];
   loadBookmarks: () => Promise<void>;
   updateBookmark: (bookmark: IBookmark) => void;
 }
@@ -32,9 +33,16 @@ export default function AppProvider({
     return bookmark!;
   };
 
+  const getTags = () => {
+    return bookmarks.reduce<IBookmark["tags"]>(
+      (acc, bookmark) => [...acc, ...bookmark.tags],
+      [],
+    );
+  };
+
   const loadBookmarks = async () => {
-    const { bookmarks: storedBookmarks } = await Storage.getData();
-    setBookmarks(storedBookmarks);
+    const { bookmarks } = await Storage.getData();
+    setBookmarks(bookmarks);
   };
 
   const updateBookmark = (bookmark: IBookmark) => {
@@ -50,6 +58,7 @@ export default function AppProvider({
         bookmarks,
         deleteBookmark,
         getBookmark,
+        getTags,
         loadBookmarks,
         updateBookmark,
       }}

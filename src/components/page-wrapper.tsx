@@ -1,5 +1,6 @@
 import {
   IonContent,
+  IonFooter,
   IonHeader,
   IonItem,
   IonLabel,
@@ -24,7 +25,12 @@ export const PageWrapper: React.FC<
         </IonToolbar>
       </IonHeader>
       <IonContent>{children}</IonContent>
-      {action && action}
+
+      {action && (
+        <IonFooter className="ion-no-border">
+          <IonToolbar>{action}</IonToolbar>
+        </IonFooter>
+      )}
     </IonPage>
   );
 };

@@ -20,6 +20,9 @@ const bookmarkButton = `
 `;
 
 document.arrive(".post-page__supplement--report", function () {
+  const isExist = !!document.querySelector(".post-page__supplement--bookmark");
+  if (isExist) return;
+
   // 'this' refers to the newly created element
   this?.insertAdjacentHTML("afterend", bookmarkButton);
 
@@ -31,6 +34,7 @@ document.arrive(".post-page__supplement--report", function () {
     group: document.querySelector(".post-sidebar__group-name > label")
       ?.textContent!,
     id,
+    tags: [],
     title: document.querySelector(".post-page__title")?.textContent!,
     url,
   };

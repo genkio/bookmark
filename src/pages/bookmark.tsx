@@ -6,6 +6,7 @@ import { Storage } from "../common/storage";
 import { Input } from "../components/input";
 import { ListHeader } from "../components/list-header";
 import { PageWrapper } from "../components/page-wrapper";
+import { TagSelect } from "../components/tag-select";
 import { Textarea } from "../components/textarea";
 import { useData } from "../hooks";
 import { IBookmark } from "../typing";
@@ -45,31 +46,40 @@ export const BookmarkPage: React.FC<Props> = ({
     history.push("/");
   };
 
-  const form = bookmark && (
+  const post = bookmark && (
     <IonList>
-      <ListHeader title="Tags" />
-      {/* TODO */}
-
       <ListHeader title="Post" />
       <Input onChange={handleChange} prop="author" value={bookmark?.author} />
       <Input onChange={handleChange} prop="group" value={bookmark?.group} />
       <Textarea
         onChange={(title) => setBookmark({ ...bookmark, title })}
+        rows={2}
         title="Title"
         value={bookmark?.title}
       />
     </IonList>
   );
 
+  const tags = bookmark && (
+    <React.Fragment>
+      <ListHeader title="Tags" />
+      <TagSelect
+        onChange={(tags) => setBookmark({ ...bookmark, tags })}
+        tags={bookmark.tags}
+      />
+    </React.Fragment>
+  );
+
   const action = (
-    <IonButton color="light" onClick={handleSubmit} size="large">
-      <IonIcon icon={save} />
+    <IonButton expand="block" fill="clear" onClick={handleSubmit} size="large">
+      <IonIcon color="dark" icon={save} />
     </IonButton>
   );
 
   return (
     <PageWrapper action={action} title="Save bookmark">
-      {form}
+      {post}
+      {tags}
     </PageWrapper>
   );
 };

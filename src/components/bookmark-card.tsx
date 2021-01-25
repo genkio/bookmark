@@ -1,18 +1,18 @@
 import {
   IonCard,
-  IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
 } from "@ionic/react";
 import React from "react";
 import { IBookmark } from "../typing";
+import { TagGroup } from "./tag-group";
 
 export const BookmarkCard: React.FC<{
   bookmark: IBookmark;
   onClick: () => void;
 }> = ({ bookmark, onClick }) => {
-  const { author, group, title } = bookmark;
+  const { group, tags, title } = bookmark;
 
   return (
     <IonCard onClick={onClick} style={{ cursor: "pointer" }}>
@@ -20,7 +20,7 @@ export const BookmarkCard: React.FC<{
         <IonCardSubtitle>{group}</IonCardSubtitle>
         <IonCardTitle>{title}</IonCardTitle>
       </IonCardHeader>
-      <IonCardContent>{author}</IonCardContent>
+      <TagGroup tags={tags} />
     </IonCard>
   );
 };
