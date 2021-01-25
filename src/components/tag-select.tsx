@@ -40,7 +40,7 @@ export const TagSelect: React.FC<{
     inputs: ValueType<ISelectOption, true>,
     _: ActionMeta<ISelectOption<string>>,
   ) => {
-    if (inputs) onChange(inputs.map(({ value }) => value));
+    if (inputs) onChange(inputs.map(({ value }) => value.trim()));
   };
 
   const value: ISelectOption[] = tags.map(createOption);

@@ -1,4 +1,4 @@
-# indie-hackers-bookmark
+# ih-bookmarks
 
 > Third-party solution for bookmarking posts on Indie Hackers
 

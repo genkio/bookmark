@@ -8,13 +8,20 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React, { PropsWithChildren } from "react";
+import { browser } from "webextension-polyfill-ts";
+import { useData } from "../hooks";
+import { Hero } from "./hero";
+import { SearchInput } from "./search-input";
 
 export const PageWrapper: React.FC<
   PropsWithChildren<{
     action?: React.ReactElement;
+    showSearch?: boolean;
     title: string;
   }>
-> = ({ action, children, title }) => {
+> = ({ action, children, showSearch = true, title }) => {
+  const { filteredBookmarks } = useData();
+
   return (
     <IonPage>
       <IonHeader>
@@ -24,7 +31,17 @@ export const PageWrapper: React.FC<
           </IonItem>
         </IonToolbar>
       </IonHeader>
-      <IonContent>{children}</IonContent>
+
+      {showSearch && <SearchInput />}
+      <IonContent>
+        {!filteredBookmarks.length ? (
+          <Hero>
+            <img src={browser.extension.getURL("dinosaur.gif")} />
+          </Hero>
+        ) : (
+          children
+        )}
+      </IonContent>
 
       {action && (
         <IonFooter className="ion-no-border">

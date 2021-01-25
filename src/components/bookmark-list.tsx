@@ -6,15 +6,16 @@ import { BookmarkCard } from "./bookmark-card";
 export const BookmarkList: React.FC<{
   onClick: (bookmark: IBookmark) => void;
 }> = ({ onClick }) => {
-  const { bookmarks } = useData();
+  const { deleteBookmark, filteredBookmarks } = useData();
 
   return (
     <React.Fragment>
-      {bookmarks.map((bookmark) => (
+      {filteredBookmarks.map((bookmark) => (
         <BookmarkCard
           key={bookmark.id}
           bookmark={bookmark}
-          onClick={() => onClick(bookmark)}
+          onEdit={() => onClick(bookmark)}
+          onDelete={() => deleteBookmark(bookmark)}
         />
       ))}
     </React.Fragment>

@@ -1,14 +1,16 @@
 import React from "react";
 import { Storage } from "../common/storage";
 import { useLocalStorage } from "../hooks";
-import { IBookmark } from "../typing";
+import { IBookmark, IStorageData } from "../typing";
 
 interface IDataContext {
-  bookmarks: IBookmark[];
   deleteBookmark: (bookmark: IBookmark) => void;
+  filterBookmarks: (searchTerm: string) => void;
+  filteredBookmarks: IBookmark[];
   getBookmark: (id: IBookmark["id"]) => IBookmark;
   getTags: () => IBookmark["tags"];
-  loadBookmarks: () => Promise<void>;
+  loadData: () => Promise<IStorageData>;
+  resetFilteredBookmarks: () => void;
   updateBookmark: (bookmark: IBookmark) => void;
 }
 
@@ -23,9 +25,31 @@ export default function AppProvider({
     "bookmarks",
     [],
   );
+  const [filteredBookmarks, setFilteredBookmarks] = React.useState<IBookmark[]>(
+    [],
+  );
 
   const deleteBookmark = (bookmark: IBookmark) => {
-    setBookmarks(bookmarks.filter(({ id }) => bookmark.id !== id));
+    const updatedBookmarks = bookmarks.filter(({ id }) => bookmark.id !== id);
+    setBookmarks(updatedBookmarks);
+    setFilteredBookmarks(updatedBookmarks);
+  };
+
+  const filterBookmarks = (rawSearchTerm: string) => {
+    const searchTerm = rawSearchTerm.toLowerCase();
+
+    const results = bookmarks.filter((bookmark) => {
+      const foundInTitle = bookmark.title
+        .toLowerCase()
+        .includes(searchTerm.toLocaleLowerCase());
+
+      const foundInTags = bookmark.tags.some((tag) =>
+        tag.toLowerCase().includes(searchTerm),
+      );
+
+      return foundInTitle || foundInTags;
+    });
+    setFilteredBookmarks(results);
   };
 
   const getBookmark = (id: IBookmark["id"]) => {
@@ -40,26 +64,36 @@ export default function AppProvider({
     );
   };
 
-  const loadBookmarks = async () => {
-    const { bookmarks } = await Storage.getData();
+  const loadData = async () => {
+    const { bookmarks, isCreate } = await Storage.getData();
     setBookmarks(bookmarks);
+    setFilteredBookmarks(bookmarks);
+    return { bookmarks, isCreate };
+  };
+
+  const resetFilteredBookmarks = () => {
+    setFilteredBookmarks(bookmarks);
   };
 
   const updateBookmark = (bookmark: IBookmark) => {
-    setBookmarks([
+    const updatedBookmarks = [
       bookmark,
       ...bookmarks.filter(({ id }) => id !== bookmark.id),
-    ]);
+    ];
+    setBookmarks(updatedBookmarks);
+    setFilteredBookmarks(updatedBookmarks);
   };
 
   return (
     <DataContext.Provider
       value={{
-        bookmarks,
         deleteBookmark,
+        filterBookmarks,
+        filteredBookmarks,
         getBookmark,
         getTags,
-        loadBookmarks,
+        loadData,
+        resetFilteredBookmarks,
         updateBookmark,
       }}
     >

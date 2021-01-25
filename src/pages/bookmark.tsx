@@ -77,7 +77,7 @@ export const BookmarkPage: React.FC<Props> = ({
   );
 
   return (
-    <PageWrapper action={action} title="Save bookmark">
+    <PageWrapper action={action} showSearch={false} title="Save bookmark">
       {post}
       {tags}
     </PageWrapper>
