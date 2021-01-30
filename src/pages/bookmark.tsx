@@ -9,7 +9,7 @@ import { PageWrapper } from "../components/page-wrapper";
 import { TagSelect } from "../components/tag-select";
 import { Textarea } from "../components/textarea";
 import { useData } from "../hooks";
-import { IBookmark } from "../typing";
+import { Bookmark, isPost } from "../typing";
 
 type Props = RouteComponentProps<{ id?: string }>;
 
@@ -21,7 +21,7 @@ export const BookmarkPage: React.FC<Props> = ({
   const history = useHistory();
   const { getBookmark, updateBookmark } = useData();
 
-  const [bookmark, setBookmark] = React.useState<IBookmark | null>(null);
+  const [bookmark, setBookmark] = React.useState<Bookmark | null>(null);
 
   React.useEffect(() => {
     if (!id) return;
@@ -38,7 +38,7 @@ export const BookmarkPage: React.FC<Props> = ({
     setBookmark({
       ...bookmark,
       [name]: value.toString(),
-    } as IBookmark);
+    } as Bookmark);
   };
 
   const handleSubmit = () => {
@@ -48,15 +48,31 @@ export const BookmarkPage: React.FC<Props> = ({
 
   const post = bookmark && (
     <IonList>
-      <ListHeader title="Post" />
-      <Input onChange={handleChange} prop="author" value={bookmark?.author} />
-      <Input onChange={handleChange} prop="group" value={bookmark?.group} />
+      <ListHeader title={bookmark.type} />
+      {isPost(bookmark) && (
+        <React.Fragment>
+          <Input
+            onChange={handleChange}
+            prop="author"
+            value={bookmark?.author}
+          />
+        </React.Fragment>
+      )}
+
       <Textarea
         onChange={(title) => setBookmark({ ...bookmark, title })}
         rows={2}
         title="Title"
         value={bookmark?.title}
       />
+      {bookmark?.content && (
+        <Textarea
+          onChange={(content) => setBookmark({ ...bookmark, content })}
+          rows={6}
+          title="Content"
+          value={bookmark.content}
+        />
+      )}
     </IonList>
   );
 
@@ -77,7 +93,7 @@ export const BookmarkPage: React.FC<Props> = ({
   );
 
   return (
-    <PageWrapper action={action} showSearch={false} title="Save bookmark">
+    <PageWrapper action={action} showSearch={false} title="Save">
       {post}
       {tags}
     </PageWrapper>

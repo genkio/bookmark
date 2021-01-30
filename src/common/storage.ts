@@ -2,7 +2,7 @@ import { browser } from "webextension-polyfill-ts";
 import { IStorageData } from "../typing";
 
 export class Storage {
-  static root: string = "bookmarks";
+  static root = "bookmarks";
   static storage = browser.storage.local;
 
   static async getData(): Promise<IStorageData> {

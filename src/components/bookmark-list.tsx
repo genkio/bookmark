@@ -1,10 +1,10 @@
 import React from "react";
 import { useData } from "../hooks";
-import { IBookmark } from "../typing";
+import { Bookmark } from "../typing";
 import { BookmarkCard } from "./bookmark-card";
 
 export const BookmarkList: React.FC<{
-  onClick: (bookmark: IBookmark) => void;
+  onClick: (bookmark: Bookmark) => void;
 }> = ({ onClick }) => {
   const { deleteBookmark, filteredBookmarks } = useData();
 

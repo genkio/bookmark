@@ -1,5 +1,6 @@
 import {
   IonAlert,
+  IonBadge,
   IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -10,17 +11,17 @@ import {
 import { chevronForwardCircleOutline, trashBinOutline } from "ionicons/icons";
 import React from "react";
 import { browser } from "webextension-polyfill-ts";
-import { IBookmark } from "../typing";
+import { Bookmark } from "../typing";
 import { TagGroup } from "./tag-group";
 
 const cursorStyle = { cursor: "pointer" };
 
 export const BookmarkCard: React.FC<{
-  bookmark: IBookmark;
+  bookmark: Bookmark;
   onDelete: () => void;
   onEdit: () => void;
 }> = ({ bookmark, onDelete, onEdit }) => {
-  const { group, tags, title, url } = bookmark;
+  const { tags, title, url } = bookmark;
 
   const [showAction, setShowAction] = React.useState(false);
   const [confirmDelete, setConfirmDelete] = React.useState(false);
@@ -36,6 +37,9 @@ export const BookmarkCard: React.FC<{
     },
   ];
 
+  const content = bookmark.content?.split(" ").slice(0, 10).join(" ");
+  const formattedContent = content ? content + "..." : "";
+
   return (
     <IonCard
       onMouseEnter={() => setShowAction(true)}
@@ -50,7 +54,11 @@ export const BookmarkCard: React.FC<{
       />
       <IonCardHeader>
         <IonRow className="ion-justify-content-between">
-          <IonText>{group}</IonText>
+          <div className="ion-align-items-center" style={{ display: "flex" }}>
+            <IonBadge className="ion-text-capitalize" color="dark">
+              {bookmark.type}
+            </IonBadge>
+          </div>
           {showAction && (
             <div>
               <IonIcon
@@ -69,11 +77,15 @@ export const BookmarkCard: React.FC<{
         </IonRow>
         <IonCardTitle
           onClick={() => browser.tabs.create({ active: false, url })}
-          style={cursorStyle}
+          style={{ ...cursorStyle, fontSize: "1.15rem" }}
         >
-          {title}
+          {formattedContent}
         </IonCardTitle>
+        <IonRow style={{ marginTop: 7.5 }}>
+          <IonText>{title}</IonText>
+        </IonRow>
       </IonCardHeader>
+
       <TagGroup tags={tags} />
     </IonCard>
   );

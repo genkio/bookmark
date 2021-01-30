@@ -1,9 +1,14 @@
-import { IonInput, IonItem } from "@ionic/react";
+import { IonInput, IonItem, IonSelect, IonSelectOption } from "@ionic/react";
 import React from "react";
 import { useData } from "../hooks";
+import { SearchType } from "../typing";
+
+const searchTypes: SearchType[] = ["content", "tags", "title"];
 
 export const SearchInput: React.FC = () => {
   const { filterBookmarks, resetFilteredBookmarks } = useData();
+
+  const [searchType, setSearchType] = React.useState<SearchType>("title");
 
   const handleSearch = ({
     currentTarget: { value },
@@ -11,17 +16,24 @@ export const SearchInput: React.FC = () => {
     if (!value) {
       resetFilteredBookmarks();
     } else {
-      filterBookmarks(value.toString());
+      filterBookmarks(searchType, value.toString());
     }
   };
 
   return (
     <IonItem lines="none">
-      <IonInput
-        onInput={handleSearch}
-        placeholder="Search [ title or tags ]"
-        type="search"
-      />
+      <IonInput onInput={handleSearch} placeholder="Search" type="search" />
+      <IonSelect
+        interface="popover"
+        onIonChange={({ detail: { value } }) => setSearchType(value)}
+        value={searchType}
+      >
+        {searchTypes.map((st) => (
+          <IonSelectOption key={st} value={st}>
+            {st}
+          </IonSelectOption>
+        ))}
+      </IonSelect>
     </IonItem>
   );
 };

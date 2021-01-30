@@ -1,17 +1,17 @@
 import React from "react";
 import { Storage } from "../common/storage";
 import { useLocalStorage } from "../hooks";
-import { IBookmark, IStorageData } from "../typing";
+import { Bookmark, IStorageData, SearchType } from "../typing";
 
 interface IDataContext {
-  deleteBookmark: (bookmark: IBookmark) => void;
-  filterBookmarks: (searchTerm: string) => void;
-  filteredBookmarks: IBookmark[];
-  getBookmark: (id: IBookmark["id"]) => IBookmark;
-  getTags: () => IBookmark["tags"];
+  deleteBookmark: (bookmark: Bookmark) => void;
+  filterBookmarks: (searchType: SearchType, searchTerm: string) => void;
+  filteredBookmarks: Bookmark[];
+  getBookmark: (id: Bookmark["id"]) => Bookmark;
+  getTags: () => Bookmark["tags"];
   loadData: () => Promise<IStorageData>;
   resetFilteredBookmarks: () => void;
-  updateBookmark: (bookmark: IBookmark) => void;
+  updateBookmark: (bookmark: Bookmark) => void;
 }
 
 export const DataContext = React.createContext<IDataContext | undefined>(
@@ -21,44 +21,47 @@ export const DataContext = React.createContext<IDataContext | undefined>(
 export default function AppProvider({
   children,
 }: React.PropsWithChildren<unknown>) {
-  const [bookmarks, setBookmarks] = useLocalStorage<IBookmark[]>(
+  const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>(
     "bookmarks",
     [],
   );
-  const [filteredBookmarks, setFilteredBookmarks] = React.useState<IBookmark[]>(
+  const [filteredBookmarks, setFilteredBookmarks] = React.useState<Bookmark[]>(
     [],
   );
 
-  const deleteBookmark = (bookmark: IBookmark) => {
+  const deleteBookmark = (bookmark: Bookmark) => {
     const updatedBookmarks = bookmarks.filter(({ id }) => bookmark.id !== id);
     setBookmarks(updatedBookmarks);
     setFilteredBookmarks(updatedBookmarks);
   };
 
-  const filterBookmarks = (rawSearchTerm: string) => {
+  const filterBookmarks = (searchType: SearchType, rawSearchTerm: string) => {
     const searchTerm = rawSearchTerm.toLowerCase();
 
     const results = bookmarks.filter((bookmark) => {
-      const foundInTitle = bookmark.title
-        .toLowerCase()
-        .includes(searchTerm.toLocaleLowerCase());
-
-      const foundInTags = bookmark.tags.some((tag) =>
-        tag.toLowerCase().includes(searchTerm),
-      );
-
-      return foundInTitle || foundInTags;
+      switch (searchType) {
+        case "content":
+          return bookmark.content?.toLowerCase().includes(searchTerm);
+        case "tags":
+          return bookmark.tags.some((tag) =>
+            tag.toLowerCase().includes(searchTerm),
+          );
+        case "title":
+          return bookmark.title.toLowerCase().includes(searchTerm);
+        default:
+          return false;
+      }
     });
     setFilteredBookmarks(results);
   };
 
-  const getBookmark = (id: IBookmark["id"]) => {
+  const getBookmark = (id: Bookmark["id"]) => {
     const bookmark = bookmarks.find((bookmark) => id === bookmark.id);
     return bookmark!;
   };
 
   const getTags = () => {
-    return bookmarks.reduce<IBookmark["tags"]>(
+    return bookmarks.reduce<Bookmark["tags"]>(
       (acc, bookmark) => [...acc, ...bookmark.tags],
       [],
     );
@@ -75,7 +78,7 @@ export default function AppProvider({
     setFilteredBookmarks(bookmarks);
   };
 
-  const updateBookmark = (bookmark: IBookmark) => {
+  const updateBookmark = (bookmark: Bookmark) => {
     const updatedBookmarks = [
       bookmark,
       ...bookmarks.filter(({ id }) => id !== bookmark.id),

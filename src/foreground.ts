@@ -1,6 +1,6 @@
 import "arrive";
 import { browser } from "webextension-polyfill-ts";
-import { IBookmark, IMessage } from "./typing";
+import { IBookmark, IComment, IMessage, IPost } from "./typing";
 
 const icon = `
   <svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#4B6681" fill-rule="nonzero">
@@ -19,6 +19,19 @@ const bookmarkButton = `
   </button>
 `;
 
+const bookmarkCommentButton = (i: number) =>
+  `<div class="footer__action footer__action--bookmark-${i}">Bookmark</div><div class="footer__separator">·</div>`;
+
+const getBookmarkCommonProps = (): Pick<IBookmark, "tags" | "title"> => ({
+  tags: document.querySelector(".post-sidebar__group-name > label")?.textContent
+    ? [
+        document.querySelector(".post-sidebar__group-name > label")
+          ?.textContent!,
+      ]
+    : [],
+  title: document.querySelector(".post-page__title")?.textContent!,
+});
+
 document.arrive(".post-page__supplement--report", function () {
   const isExist = !!document.querySelector(".post-page__supplement--bookmark");
   if (isExist) return;
@@ -29,24 +42,80 @@ document.arrive(".post-page__supplement--report", function () {
   const url = document.location.href;
   const [, id] = url.split("post/");
 
-  const bookmark: IBookmark = {
+  const post: IPost = {
+    ...getBookmarkCommonProps(),
     author: document.querySelector(".user-link__name")?.textContent?.trim()!,
-    group: document.querySelector(".post-sidebar__group-name > label")
-      ?.textContent!,
+    content: document.querySelector(".post-page__body")?.textContent?.trim()!,
     id,
-    tags: [],
-    title: document.querySelector(".post-page__title")?.textContent!,
-    url,
+    type: "post",
+    url: document.location.href,
   };
 
   document.querySelector(".post-page__supplement--bookmark")?.addEventListener(
     "click",
     async function () {
       await browser.runtime.sendMessage({
-        bookmark,
+        bookmark: post,
         isCreate: true,
       } as IMessage);
     },
     false,
   );
 });
+
+document.arrive("ol.comment-tree", function () {
+  const comments = document.querySelectorAll(".comment__content");
+  const links = document.querySelectorAll(
+    "a.footer__date",
+  ) as NodeListOf<HTMLAnchorElement>;
+
+  // FIXME performance issue
+  if (comments.length >= 100) return;
+
+  Array.from(document.querySelectorAll(".footer__action--reply")).map(
+    (el, i) => {
+      const className = `.footer__action--bookmark-${i}`;
+
+      const isExist = !!document.querySelector(className);
+      if (isExist) return;
+
+      el.insertAdjacentHTML("beforebegin", bookmarkCommentButton(i));
+
+      const url = links[i].href;
+      const [, id] = url.split("commentId=");
+
+      const comment: IComment = {
+        ...getBookmarkCommonProps(),
+        content: comments[i].textContent?.trim()!,
+        id,
+        type: "comment",
+        url: links[i].href,
+      };
+
+      document.querySelector(className)?.addEventListener(
+        "click",
+        async function () {
+          await browser.runtime.sendMessage({
+            bookmark: comment,
+            isCreate: true,
+          } as IMessage);
+        },
+        false,
+      );
+    },
+  );
+});
+
+/**
+ * To retrieve comment content and anchor manually
+ *
+// .footer__separator -> .footer__action--collapse -> .footer__separator -> comment anchor
+const commentAnchor = document.querySelectorAll(className)[0]
+  .previousElementSibling?.previousElementSibling?.previousElementSibling
+  ?.previousElementSibling as HTMLAnchorElement;
+const url = commentAnchor.href;
+
+// .comment__footer -> .comment__main -> .comment__content
+const content = document.querySelectorAll(className)[0].parentElement
+  ?.parentElement?.children[0].textContent;
+ */
