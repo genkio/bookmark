@@ -10,9 +10,9 @@ export const BookmarksPage: React.FC = () => {
   const { loadData } = useData();
 
   React.useEffect(() => {
-    loadData().then(({ bookmarks: [{ id }], isCreate }) => {
-      if (isCreate) {
-        history.push(`/bookmark/${id}`);
+    loadData().then(({ bookmarks: [bookmark], isCreate }) => {
+      if (isCreate && bookmark) {
+        history.push(`/bookmark/${bookmark.id}`);
       }
     });
   }, []);

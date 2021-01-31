@@ -9,7 +9,7 @@ import { PageWrapper } from "../components/page-wrapper";
 import { TagSelect } from "../components/tag-select";
 import { Textarea } from "../components/textarea";
 import { useData } from "../hooks";
-import { Bookmark, isPost } from "../typing";
+import { Bookmark } from "../typing";
 
 type Props = RouteComponentProps<{ id?: string }>;
 
@@ -49,15 +49,9 @@ export const BookmarkPage: React.FC<Props> = ({
   const post = bookmark && (
     <IonList>
       <ListHeader title={bookmark.type} />
-      {isPost(bookmark) && (
         <React.Fragment>
-          <Input
-            onChange={handleChange}
-            prop="author"
-            value={bookmark?.author}
-          />
+        <Input onChange={handleChange} prop="author" value={bookmark.author} />
         </React.Fragment>
-      )}
 
       <Textarea
         onChange={(title) => setBookmark({ ...bookmark, title })}
@@ -84,6 +78,17 @@ export const BookmarkPage: React.FC<Props> = ({
     </React.Fragment>
   );
 
+  const notes = bookmark && (
+    <React.Fragment>
+      <ListHeader title="Notes" />
+      <Textarea
+        onChange={(notes) => setBookmark({ ...bookmark, notes })}
+        title="Notes"
+        value={bookmark.notes ?? ""}
+      />
+    </React.Fragment>
+  );
+
   const action = (
     <IonButton expand="block" fill="clear" onClick={handleSubmit} size="large">
       <IonIcon color="dark" icon={save} />
@@ -93,6 +98,7 @@ export const BookmarkPage: React.FC<Props> = ({
   return (
     <PageWrapper action={action} showSearch={false} title="Save">
       {tags}
+      {notes}
       {post}
     </PageWrapper>
   );

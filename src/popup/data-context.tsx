@@ -40,8 +40,12 @@ export default function AppProvider({
 
     const results = bookmarks.filter((bookmark) => {
       switch (searchType) {
+        case "author":
+          return bookmark.author.toLowerCase().includes(searchTerm);
         case "content":
           return bookmark.content?.toLowerCase().includes(searchTerm);
+        case "notes":
+          return bookmark.notes?.toLowerCase().includes(searchTerm);
         case "tags":
           return bookmark.tags.some((tag) =>
             tag.toLowerCase().includes(searchTerm),

@@ -42,13 +42,16 @@ document.arrive(".post-page__supplement--report", function () {
   this?.insertAdjacentHTML("afterend", bookmarkButton);
 
   const url = document.location.href;
-  const [, id] = url.split("post/");
+  const [id] = url.split("-").slice(-1);
 
   const post: IPost = {
     ...getBookmarkCommonProps(document),
-    author: document.querySelector(".user-link__name")?.textContent?.trim()!,
+    author: document
+      .querySelector(".user-link__username")
+      ?.textContent?.trim()!,
     content: document.querySelector(".post-page__body")?.textContent?.trim()!,
     id,
+    notes: "",
     type: "post",
     url: document.location.href,
   };
@@ -70,6 +73,7 @@ document.arrive("ol.comment-tree", function () {
   const links = document.querySelectorAll(
     "a.footer__date",
   ) as NodeListOf<HTMLAnchorElement>;
+  const usernames = document.querySelectorAll(".user-link__name--username");
 
   // FIXME performance issue
   if (comments.length >= 100) return;
@@ -88,8 +92,10 @@ document.arrive("ol.comment-tree", function () {
 
       const comment: IComment = {
         ...getBookmarkCommonProps(document),
+        author: usernames[i].textContent?.trim()!,
         content: comments[i].textContent?.trim()!,
         id,
+        notes: "",
         type: "comment",
         url: links[i].href,
       };

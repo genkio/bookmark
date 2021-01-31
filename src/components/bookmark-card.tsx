@@ -8,7 +8,11 @@ import {
   IonRow,
   IonText,
 } from "@ionic/react";
-import { chevronForwardCircleOutline, trashBinOutline } from "ionicons/icons";
+import {
+  chevronForwardCircleOutline,
+  linkOutline,
+  trashBinOutline,
+} from "ionicons/icons";
 import React from "react";
 import { browser } from "webextension-polyfill-ts";
 import { Bookmark } from "../typing";
@@ -80,6 +84,7 @@ export const BookmarkCard: React.FC<{
           style={{ ...cursorStyle, fontSize: "1.15rem" }}
         >
           {formattedContent}
+          <IonIcon icon={linkOutline} size="small" style={{ marginLeft: 5 }} />
         </IonCardTitle>
         <IonRow style={{ marginTop: 7.5 }}>
           <IonText>{title}</IonText>
