@@ -14,6 +14,7 @@ export const Textarea: React.FC<{
       onIonChange={({ detail: { value } }) => {
         if (value) onChange(value);
       }}
+      style={{ lineHeight: "1.25rem" }}
       value={value}
     />
   </IonItem>

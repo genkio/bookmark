@@ -4,12 +4,21 @@ import { ActionMeta, ValueType } from "react-select/src/types";
 import { useData } from "../hooks";
 import { IBookmark, ISelectOption } from "../typing";
 
-const style = {
+const styles = {
   control: (base: React.CSSProperties) => ({
     ...base,
     border: 0,
+    borderRadius: 0,
     boxShadow: "none",
     paddingLeft: 5,
+  }),
+  menu: (base: React.CSSProperties) => ({
+    ...base,
+    borderRadius: 0,
+  }),
+  option: (base: React.CSSProperties) => ({
+    ...base,
+    color: "black",
   }),
 };
 
@@ -54,7 +63,7 @@ export const TagSelect: React.FC<{
       onInputChange={handleInputChange}
       options={autoCompletes}
       placeholder="Add a tag"
-      styles={style}
+      styles={styles}
       value={value}
     />
   );

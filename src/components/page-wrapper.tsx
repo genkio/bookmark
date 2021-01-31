@@ -13,6 +13,7 @@ import { browser } from "webextension-polyfill-ts";
 import { useData } from "../hooks";
 import { Hero } from "./hero";
 import { SearchInput } from "./search-input";
+import { ThemeToggle } from "./theme-toggle";
 
 export const PageWrapper: React.FC<
   PropsWithChildren<{
@@ -37,6 +38,7 @@ export const PageWrapper: React.FC<
             <IonLabel style={{ fontSize: "x-large" }}>
               {title} {count}
             </IonLabel>
+            <ThemeToggle />
           </IonItem>
         </IonToolbar>
       </IonHeader>
