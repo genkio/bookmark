@@ -7,6 +7,7 @@ import {
   IonPage,
   IonToolbar,
 } from "@ionic/react";
+import numbro from "numbro";
 import React, { PropsWithChildren } from "react";
 import { browser } from "webextension-polyfill-ts";
 import { useData } from "../hooks";
@@ -22,12 +23,20 @@ export const PageWrapper: React.FC<
 > = ({ action, children, showSearch = true, title }) => {
   const { filteredBookmarks } = useData();
 
+  const count = (
+    <span style={{ fontSize: "0.5rem" }}>
+      ({numbro(filteredBookmarks.length).format("0a")})
+    </span>
+  );
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonItem lines="none">
-            <IonLabel style={{ fontSize: "x-large" }}>{title}</IonLabel>
+            <IonLabel style={{ fontSize: "x-large" }}>
+              {title} {count}
+            </IonLabel>
           </IonItem>
         </IonToolbar>
       </IonHeader>

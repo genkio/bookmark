@@ -38,7 +38,7 @@ export const BookmarkCard: React.FC<{
   ];
 
   const content = bookmark.content?.split(" ").slice(0, 10).join(" ");
-  const formattedContent = content ? content + "..." : "";
+  const formattedContent = content ? content + "..." : "No content";
 
   return (
     <IonCard

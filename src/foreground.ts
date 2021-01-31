@@ -22,7 +22,9 @@ const bookmarkButton = `
 const bookmarkCommentButton = (i: number) =>
   `<div class="footer__action footer__action--bookmark-${i}">Bookmark</div><div class="footer__separator">·</div>`;
 
-const getBookmarkCommonProps = (): Pick<IBookmark, "tags" | "title"> => ({
+const getBookmarkCommonProps = (
+  document: Document,
+): Pick<IBookmark, "tags" | "title"> => ({
   tags: document.querySelector(".post-sidebar__group-name > label")?.textContent
     ? [
         document.querySelector(".post-sidebar__group-name > label")
@@ -43,7 +45,7 @@ document.arrive(".post-page__supplement--report", function () {
   const [, id] = url.split("post/");
 
   const post: IPost = {
-    ...getBookmarkCommonProps(),
+    ...getBookmarkCommonProps(document),
     author: document.querySelector(".user-link__name")?.textContent?.trim()!,
     content: document.querySelector(".post-page__body")?.textContent?.trim()!,
     id,
@@ -85,7 +87,7 @@ document.arrive("ol.comment-tree", function () {
       const [, id] = url.split("commentId=");
 
       const comment: IComment = {
-        ...getBookmarkCommonProps(),
+        ...getBookmarkCommonProps(document),
         content: comments[i].textContent?.trim()!,
         id,
         type: "comment",

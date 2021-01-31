@@ -4,17 +4,16 @@ import { ItemHeader } from "./item-header";
 
 export const Textarea: React.FC<{
   onChange: (value: string) => void;
-  rows?: number;
   title: string;
   value: string;
-}> = ({ onChange, rows = 5, title, value }) => (
+}> = ({ onChange, title, value }) => (
   <IonItem lines="none">
     <ItemHeader title={title} />
     <IonTextarea
+      autoGrow
       onIonChange={({ detail: { value } }) => {
         if (value) onChange(value);
       }}
-      rows={rows}
       value={value}
     />
   </IonItem>

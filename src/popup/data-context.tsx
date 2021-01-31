@@ -61,9 +61,13 @@ export default function AppProvider({
   };
 
   const getTags = () => {
-    return bookmarks.reduce<Bookmark["tags"]>(
-      (acc, bookmark) => [...acc, ...bookmark.tags],
-      [],
+    return Array.from(
+      new Set(
+        bookmarks.reduce<Bookmark["tags"]>(
+          (acc, bookmark) => [...acc, ...bookmark.tags],
+          [],
+        ),
+      ),
     );
   };
 

@@ -18,7 +18,7 @@ export const BookmarksPage: React.FC = () => {
   }, []);
 
   return (
-    <PageWrapper title="Bookmarks">
+    <PageWrapper title="IH Bookmarks">
       <BookmarkList
         onClick={({ id }) => {
           history.push(`/bookmark/${id}`);

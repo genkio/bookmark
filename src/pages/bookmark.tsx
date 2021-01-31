@@ -61,14 +61,12 @@ export const BookmarkPage: React.FC<Props> = ({
 
       <Textarea
         onChange={(title) => setBookmark({ ...bookmark, title })}
-        rows={2}
         title="Title"
         value={bookmark?.title}
       />
       {bookmark?.content && (
         <Textarea
           onChange={(content) => setBookmark({ ...bookmark, content })}
-          rows={6}
           title="Content"
           value={bookmark.content}
         />
@@ -94,8 +92,8 @@ export const BookmarkPage: React.FC<Props> = ({
 
   return (
     <PageWrapper action={action} showSearch={false} title="Save">
-      {post}
       {tags}
+      {post}
     </PageWrapper>
   );
 };
