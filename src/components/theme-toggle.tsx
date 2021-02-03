@@ -1,11 +1,10 @@
 import { IonButton, IonButtons, IonIcon } from "@ionic/react";
 import { moon, sunny } from "ionicons/icons";
 import React from "react";
+import { useLocalStorage } from "../hooks";
 
 export const ThemeToggle: React.FC = () => {
-  const [isDark, setIsDark] = React.useState<boolean>(
-    !!window.matchMedia("(prefers-color-scheme: dark)"),
-  );
+  const [isDark, setIsDark] = useLocalStorage("isDark", false);
 
   React.useEffect(() => {
     document.body.classList.toggle("dark", isDark);

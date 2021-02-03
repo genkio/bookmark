@@ -18,10 +18,11 @@ import { ThemeToggle } from "./theme-toggle";
 export const PageWrapper: React.FC<
   PropsWithChildren<{
     action?: React.ReactElement;
+    showCount?: boolean;
     showSearch?: boolean;
     title: string;
   }>
-> = ({ action, children, showSearch = true, title }) => {
+> = ({ action, children, showCount, showSearch = true, title }) => {
   const { filteredBookmarks } = useData();
 
   const count = (
@@ -36,7 +37,7 @@ export const PageWrapper: React.FC<
         <IonToolbar>
           <IonItem lines="none">
             <IonLabel style={{ fontSize: "x-large" }}>
-              {title} {count}
+              {title} {showCount && count}
             </IonLabel>
             <ThemeToggle />
           </IonItem>

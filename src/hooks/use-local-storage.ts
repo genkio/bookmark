@@ -1,9 +1,10 @@
 import React from "react";
 import { browser } from "webextension-polyfill-ts";
 import { Storage } from "../common/storage";
+import { IStorageData } from "../typing";
 
 export function useLocalStorage<T>(
-  key: string,
+  key: keyof IStorageData,
   initialValue: T,
 ): [T, (data: T) => void] {
   const [storedValue, setStoredValue] = React.useState<T>(initialValue);

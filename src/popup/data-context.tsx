@@ -1,7 +1,7 @@
 import React from "react";
 import { Storage } from "../common/storage";
 import { useLocalStorage } from "../hooks";
-import { Bookmark, IStorageData, SearchType } from "../typing";
+import { Bookmark, IConfig, IStorageData, SearchType } from "../typing";
 
 interface IDataContext {
   deleteBookmark: (bookmark: Bookmark) => void;
@@ -9,6 +9,7 @@ interface IDataContext {
   filteredBookmarks: Bookmark[];
   getBookmark: (id: Bookmark["id"]) => Bookmark;
   getTags: () => Bookmark["tags"];
+  isActivationRequired: boolean;
   loadData: () => Promise<IStorageData>;
   resetFilteredBookmarks: () => void;
   updateBookmark: (bookmark: Bookmark) => void;
@@ -25,9 +26,18 @@ export default function AppProvider({
     "bookmarks",
     [],
   );
+  const [config, setConfig] = React.useState<IConfig>();
   const [filteredBookmarks, setFilteredBookmarks] = React.useState<Bookmark[]>(
     [],
   );
+  const [isActivationRequired, setIsActivationRequired] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!config) return;
+    if (bookmarks.length > config?.freeTierLimit) {
+      setIsActivationRequired(true);
+    }
+  }, [bookmarks, config]);
 
   const deleteBookmark = (bookmark: Bookmark) => {
     const updatedBookmarks = bookmarks.filter(({ id }) => bookmark.id !== id);
@@ -76,10 +86,17 @@ export default function AppProvider({
   };
 
   const loadData = async () => {
-    const { bookmarks, isCreate } = await Storage.getData();
+    const {
+      bookmarks,
+      config,
+      isCreate,
+      isDark,
+      licenseKey,
+    } = await Storage.getData();
     setBookmarks(bookmarks);
+    setConfig(config);
     setFilteredBookmarks(bookmarks);
-    return { bookmarks, isCreate };
+    return { bookmarks, config, isCreate, isDark, licenseKey };
   };
 
   const resetFilteredBookmarks = () => {
@@ -103,6 +120,7 @@ export default function AppProvider({
         filteredBookmarks,
         getBookmark,
         getTags,
+        isActivationRequired,
         loadData,
         resetFilteredBookmarks,
         updateBookmark,

@@ -3,6 +3,7 @@ import { save } from "ionicons/icons";
 import React from "react";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { Storage } from "../common/storage";
+import { ActivationAlert } from "../components/activation-alert";
 import { Input } from "../components/input";
 import { ListHeader } from "../components/list-header";
 import { PageWrapper } from "../components/page-wrapper";
@@ -49,9 +50,9 @@ export const BookmarkPage: React.FC<Props> = ({
   const post = bookmark && (
     <IonList>
       <ListHeader title={bookmark.type} />
-        <React.Fragment>
+      <React.Fragment>
         <Input onChange={handleChange} prop="author" value={bookmark.author} />
-        </React.Fragment>
+      </React.Fragment>
 
       <Textarea
         onChange={(title) => setBookmark({ ...bookmark, title })}
@@ -97,6 +98,7 @@ export const BookmarkPage: React.FC<Props> = ({
 
   return (
     <PageWrapper action={action} showSearch={false} title="Save">
+      <ActivationAlert />
       {tags}
       {notes}
       {post}
