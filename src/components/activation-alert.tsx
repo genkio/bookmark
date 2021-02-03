@@ -3,7 +3,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { browser } from "webextension-polyfill-ts";
 import { activate } from "../common/activator";
-import { EMAIL, PRODUCT_LINK } from "../constant";
+import { PRODUCT_LINK } from "../constant";
 import { useData } from "../hooks";
 
 export const ActivationAlert: React.FC = () => {
@@ -39,18 +39,6 @@ export const ActivationAlert: React.FC = () => {
     {
       text: "Go away 😭",
       role: "cancel",
-    },
-    {
-      text: "",
-      role: "cancel",
-    },
-    {
-      text: "Contact us 📧",
-      handler: () => {
-        browser.tabs.create({
-          url: `mailto:Lee<${EMAIL}>?subject=About IH Bookmarks`,
-        });
-      },
     },
   ];
 

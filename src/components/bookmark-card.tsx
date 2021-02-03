@@ -41,7 +41,7 @@ export const BookmarkCard: React.FC<{
     },
   ];
 
-  const content = bookmark.content?.split(" ").slice(0, 10).join(" ");
+  const content = bookmark.content?.split(" ").slice(0, 20).join(" ");
   const formattedContent = content ? content + "..." : "No content";
 
   return (
