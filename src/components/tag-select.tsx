@@ -1,6 +1,6 @@
 import React from "react";
 import CreatableSelect from "react-select/creatable";
-import { ActionMeta, ValueType } from "react-select/src/types";
+import { ValueType } from "react-select/src/types";
 import { useData } from "../hooks";
 import { IBookmark, ISelectOption } from "../typing";
 
@@ -45,10 +45,7 @@ export const TagSelect: React.FC<{
     );
   };
 
-  const handleChange = (
-    inputs: ValueType<ISelectOption, true>,
-    _: ActionMeta<ISelectOption<string>>,
-  ) => {
+  const handleChange = (inputs: ValueType<ISelectOption, true>) => {
     if (inputs) onChange(inputs.map(({ value }) => value.trim()));
   };
 

@@ -57,9 +57,9 @@ export const BookmarkPage: React.FC<Props> = ({
       <Textarea
         onChange={(title) => setBookmark({ ...bookmark, title })}
         title="Title"
-        value={bookmark?.title}
+        value={bookmark.title}
       />
-      {bookmark?.content && (
+      {bookmark.content && (
         <Textarea
           onChange={(content) => setBookmark({ ...bookmark, content })}
           title="Content"

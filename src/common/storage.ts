@@ -21,7 +21,7 @@ export class Storage {
     await this.storage.remove(key);
   }
 
-  static async setData(data: { [s: string]: any }) {
+  static async setData(data: { [s: string]: unknown }) {
     await this.storage.set(data);
   }
 }

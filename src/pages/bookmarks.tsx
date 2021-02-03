@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { ActionButton } from "../components/action-button";
 import { ActivationAlert } from "../components/activation-alert";
 import { BookmarkList } from "../components/bookmark-list";
 import { PageWrapper } from "../components/page-wrapper";
@@ -26,6 +27,7 @@ export const BookmarksPage: React.FC = () => {
           history.push(`/bookmark/${id}`);
         }}
       />
+      <ActionButton />
     </PageWrapper>
   );
 };

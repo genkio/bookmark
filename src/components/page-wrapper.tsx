@@ -11,7 +11,6 @@ import numbro from "numbro";
 import React, { PropsWithChildren } from "react";
 import { browser } from "webextension-polyfill-ts";
 import { useData } from "../hooks";
-import { ActionButton } from "./action-button";
 import { Hero } from "./hero";
 import { SearchInput } from "./search-input";
 import { ThemeToggle } from "./theme-toggle";
@@ -61,8 +60,6 @@ export const PageWrapper: React.FC<
           <IonToolbar>{action}</IonToolbar>
         </IonFooter>
       )}
-
-      <ActionButton />
     </IonPage>
   );
 };

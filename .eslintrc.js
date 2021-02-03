@@ -17,6 +17,8 @@ module.exports = {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     "react/prop-types": "off",
+    "@typescript-eslint/no-non-null-assertion": 1,
+    "@typescript-eslint/no-non-null-asserted-optional-chain": 1,
   },
   settings: {
     react: {

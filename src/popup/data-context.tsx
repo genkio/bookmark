@@ -34,7 +34,7 @@ export default function AppProvider({
 
   React.useEffect(() => {
     if (!config) return;
-    if (bookmarks.length > config?.freeTierLimit) {
+    if (bookmarks.length > config.freeTierLimit) {
       setIsActivationRequired(true);
     }
   }, [bookmarks, config]);
