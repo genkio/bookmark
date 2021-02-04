@@ -1,9 +1,9 @@
 import { IonBadge } from "@ionic/react";
 import React from "react";
-import { IBookmark } from "../typing";
+import { Bookmark } from "../typing";
 
 export const TagGroup: React.FC<{
-  tags: IBookmark["tags"];
+  tags: Bookmark["tags"];
 }> = ({ tags }) => {
   if (!tags.length) return null;
 

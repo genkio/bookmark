@@ -1,6 +1,6 @@
 import "arrive";
 import { browser } from "webextension-polyfill-ts";
-import { IBookmark, IComment, IMessage, IPost } from "./typing";
+import { Bookmark, IComment, IMessage, IPost } from "./typing";
 
 const icon = `
   <svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#4B6681" fill-rule="nonzero">
@@ -24,7 +24,7 @@ const bookmarkCommentButton = (i: number) =>
 
 const getBookmarkCommonProps = (
   document: Document,
-): Pick<IBookmark, "tags" | "title"> => ({
+): Pick<Bookmark, "tags" | "title"> => ({
   tags: document.querySelector(".post-sidebar__group-name > label")?.textContent
     ? [
         document.querySelector(".post-sidebar__group-name > label")

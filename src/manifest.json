@@ -17,6 +17,7 @@
   "permissions": [
     "*://api.gumroad.com/*",
     "https://www.indiehackers.com/post/*",
+    "storage",
     "unlimitedStorage"
   ],
   "version": "1.0"

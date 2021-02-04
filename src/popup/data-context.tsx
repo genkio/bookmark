@@ -4,6 +4,7 @@ import { useLocalStorage } from "../hooks";
 import { Bookmark, IConfig, IStorageData, SearchType } from "../typing";
 
 interface IDataContext {
+  bookmarks: Bookmark[];
   deleteBookmark: (bookmark: Bookmark) => void;
   filterBookmarks: (searchType: SearchType, searchTerm: string) => void;
   filteredBookmarks: Bookmark[];
@@ -115,6 +116,7 @@ export default function AppProvider({
   return (
     <DataContext.Provider
       value={{
+        bookmarks,
         deleteBookmark,
         filterBookmarks,
         filteredBookmarks,

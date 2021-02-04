@@ -2,7 +2,7 @@ import React from "react";
 import CreatableSelect from "react-select/creatable";
 import { ValueType } from "react-select/src/types";
 import { useData } from "../hooks";
-import { IBookmark, ISelectOption } from "../typing";
+import { Bookmark, ISelectOption } from "../typing";
 
 const styles = {
   control: (base: React.CSSProperties) => ({
@@ -28,8 +28,8 @@ const createOption = (tag: string): ISelectOption => ({
 });
 
 export const TagSelect: React.FC<{
-  onChange: (tags: IBookmark["tags"]) => void;
-  tags: IBookmark["tags"];
+  onChange: (tags: Bookmark["tags"]) => void;
+  tags: Bookmark["tags"];
 }> = ({ onChange, tags }) => {
   const { getTags } = useData();
 
