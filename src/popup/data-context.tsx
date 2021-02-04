@@ -92,12 +92,20 @@ export default function AppProvider({
       config,
       isCreate,
       isDark,
+      lastActivationReqTs,
       licenseKey,
     } = await Storage.getData();
     setBookmarks(bookmarks);
     setConfig(config);
     setFilteredBookmarks(bookmarks);
-    return { bookmarks, config, isCreate, isDark, licenseKey };
+    return {
+      bookmarks,
+      config,
+      isCreate,
+      isDark,
+      lastActivationReqTs,
+      licenseKey,
+    };
   };
 
   const resetFilteredBookmarks = () => {

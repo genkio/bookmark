@@ -47,7 +47,11 @@ export const ActivationPage: React.FC = () => {
 
     try {
       setLoading(true);
-      const { message, success } = await activate(licenseKey);
+      const { message, success } = await activate({
+        isUser: true,
+        licenseKey,
+        lastActivationReqTs: null,
+      });
       setErrorMessage(message);
       if (!success) setErrorMessage(message);
     } catch (e) {

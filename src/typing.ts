@@ -3,6 +3,7 @@ export interface IStorageData {
   config: IConfig;
   isCreate: boolean;
   isDark: boolean;
+  lastActivationReqTs: number;
   licenseKey: string;
 }
 

@@ -1,6 +1,7 @@
 import { PRODUCT_LINK } from "../constant";
 
 const URL = "https://api.gumroad.com/v2/licenses/verify";
+const ACTIVATION_INTERVAL = 10 * 1000;
 
 interface IGumroadRequest {
   product_permalink: string;
@@ -24,10 +25,34 @@ interface IGumroadResponseFailed {
 
 type GumroadResponse = IGumroadResponseSucceed | IGumroadResponseFailed;
 
-export async function activate(
-  licenseKey: string,
-): Promise<{ message: string; success: boolean }> {
-  if (!licenseKey) return { message: "", success: false };
+interface IActivationRequest {
+  licenseKey: string;
+  lastActivationReqTs: number | null;
+  isUser?: boolean; // user request activation
+}
+
+interface IActivationResponse {
+  message: string;
+  success: boolean;
+  timestamp: number | null;
+}
+
+export async function activate({
+  licenseKey,
+  lastActivationReqTs,
+  isUser = false,
+}: IActivationRequest): Promise<IActivationResponse> {
+  if (!licenseKey) {
+    return { message: "", success: false, timestamp: null };
+  }
+
+  const now = new Date().valueOf();
+  const diff = now - (lastActivationReqTs ?? now);
+  const wait = diff < ACTIVATION_INTERVAL;
+
+  if (wait && !isUser) {
+    return { message: "", success: false, timestamp: null };
+  }
 
   const headers = new Headers();
   headers.set("Accept", "application/json");
@@ -56,7 +81,7 @@ export async function activate(
       : "succeed"
     : res.message;
 
-  return { message, success };
+  return { message, success, timestamp: now };
 }
 
 function getPermalink(productLink: string) {

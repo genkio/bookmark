@@ -13,6 +13,7 @@ export class Storage {
       config: { ...DEFAULT_CONFIG },
       isCreate: data.isCreate ?? false,
       isDark: false,
+      lastActivationReqTs: data.lastActivationReqTs ?? 0,
       licenseKey: data.licenseKey ?? "",
     };
   }
