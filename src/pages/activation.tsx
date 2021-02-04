@@ -20,14 +20,14 @@ export const ActivationPage: React.FC = () => {
     IStorageData["licenseKey"]
   >("licenseKey", "");
   const [loading, setLoading] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [message, setMessage] = React.useState("");
 
   const alert = (
     <IonAlert
-      isOpen={!!errorMessage}
-      onDidDismiss={() => setErrorMessage("")}
-      header={"Activation Error"}
-      message={errorMessage}
+      isOpen={!!message}
+      onDidDismiss={() => setMessage("")}
+      header={message === "succeed" ? "Thank You!" : "Activation Error"}
+      message={message}
       buttons={[
         {
           text: "Contact support",
@@ -52,10 +52,10 @@ export const ActivationPage: React.FC = () => {
         licenseKey,
         lastActivationReqTs: null,
       });
-      setErrorMessage(message);
-      if (!success) setErrorMessage(message);
+      setMessage(message);
+      if (!success) setMessage(message);
     } catch (e) {
-      setErrorMessage(`Failed to activate: ${e.message}`);
+      setMessage(`Failed to activate: ${e.message}`);
     } finally {
       setLoading(false);
     }

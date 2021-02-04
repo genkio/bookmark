@@ -51,7 +51,7 @@ export async function activate({
   const wait = diff < ACTIVATION_INTERVAL;
 
   if (wait && !isUser) {
-    return { message: "", success: false, timestamp: null };
+    return { message: "", success: true, timestamp: null };
   }
 
   const headers = new Headers();
