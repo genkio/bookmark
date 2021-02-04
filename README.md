@@ -1,6 +1,6 @@
 # ih-bookmarks
 
-> Third-party solution for bookmarking posts on Indie Hackers
+> Third-party solution for bookmarking posts and comments on Indie Hackers
 
 ## Getting Started
 

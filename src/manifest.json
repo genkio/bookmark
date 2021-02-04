@@ -1,6 +1,6 @@
 {
   "name": "IH Bookmarks",
-  "description": "Third-party solution for bookmarking posts on Indie Hackers",
+  "description": "Third-party solution for bookmarking posts and comments on Indie Hackers",
   "manifest_version": 2,
   "icons": {
     "16": "icon-16x16.png",

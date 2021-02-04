@@ -47,7 +47,7 @@ document.arrive(".post-page__supplement--report", function () {
   const post: IPost = {
     ...getBookmarkCommonProps(document),
     author: document
-      .querySelector(".user-link__username")
+      .querySelector(".user-link__name--username")
       ?.textContent?.trim()!,
     content: document.querySelector(".post-page__body")?.textContent?.trim()!,
     id,

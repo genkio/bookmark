@@ -10,7 +10,6 @@ import { browser } from "webextension-polyfill-ts";
 import {
   caretUp,
   downloadOutline,
-  logoTwitter,
   mailOutline,
   openOutline,
 } from "ionicons/icons";
@@ -27,11 +26,18 @@ function processContent(content: string | string[] | undefined): string {
 }
 
 function downloadCsv(bookmarks: Bookmark[]) {
+  const typeNameMap: Record<Bookmark["type"], string> = {
+    comment: "Comment",
+    post: "Post",
+  };
+
   const headers: (keyof Bookmark)[][] = [
     ["type", "title", "author", "content", "url", "notes", "tags"],
   ];
   const all = bookmarks.map((bookmark) =>
-    headers[0].map((prop) => bookmark[prop]),
+    headers[0].map((prop) =>
+      prop === "type" ? typeNameMap[bookmark[prop]] : bookmark[prop],
+    ),
   );
 
   const body =
@@ -66,22 +72,6 @@ export const ActionButton: React.FC = () => {
       url: `mailto:Lee<${EMAIL}>?subject=About IH Bookmarks`,
     });
 
-  const handleOpenTwitter = () =>
-    browser.tabs.create({
-      url: "https://twitter.com/tinywebapp",
-    });
-
-  const alertActions = [
-    {
-      text: "Cancel",
-      role: "cancel",
-    },
-    {
-      text: "Export",
-      handler: () => downloadCsv(bookmarks),
-    },
-  ];
-
   return (
     <IonFab vertical="bottom" horizontal="end" slot="fixed">
       <IonAlert
@@ -89,7 +79,16 @@ export const ActionButton: React.FC = () => {
         onDidDismiss={() => setConfirmDownload(false)}
         header={"Export Bookmarks"}
         message={"Do you want to export all your data?"}
-        buttons={alertActions}
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+          {
+            text: "Export",
+            handler: () => downloadCsv(bookmarks),
+          },
+        ]}
       />
       <IonFabButton color="dark" size="small">
         <IonIcon icon={caretUp} />
@@ -100,9 +99,6 @@ export const ActionButton: React.FC = () => {
         </IonFabButton>
         <IonFabButton onClick={handleOpenMail}>
           <IonIcon icon={mailOutline} />
-        </IonFabButton>
-        <IonFabButton onClick={handleOpenTwitter}>
-          <IonIcon icon={logoTwitter} />
         </IonFabButton>
         <IonFabButton onClick={() => setConfirmDownload(true)}>
           <IonIcon icon={downloadOutline} />

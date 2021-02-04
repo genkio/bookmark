@@ -1,7 +1,7 @@
 {
   "name": "ih-bookmarks",
   "version": "1.0.0",
-  "description": "Third-party solution for bookmarking posts on Indie Hackers",
+  "description": "Third-party solution for bookmarking posts and comments on Indie Hackers",
   "license": "MIT",
   "scripts": {
     "dev": "webpack --config webpack.development.js --watch --progress",
