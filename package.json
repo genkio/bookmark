@@ -1,6 +1,6 @@
 {
   "name": "ih-bookmarks",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Third-party solution for bookmarking posts and comments on Indie Hackers",
   "license": "MIT",
   "scripts": {

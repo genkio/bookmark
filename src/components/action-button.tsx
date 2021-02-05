@@ -10,6 +10,7 @@ import { browser } from "webextension-polyfill-ts";
 import {
   caretUp,
   downloadOutline,
+  logoTwitter,
   mailOutline,
   openOutline,
 } from "ionicons/icons";
@@ -72,6 +73,11 @@ export const ActionButton: React.FC = () => {
       url: `mailto:Lee<${EMAIL}>?subject=About IH Bookmarks`,
     });
 
+  const handleOpenTwitter = () =>
+    browser.tabs.create({
+      url: "https://twitter.com/tinywebapp",
+    });
+
   return (
     <IonFab vertical="bottom" horizontal="end" slot="fixed">
       <IonAlert
@@ -99,6 +105,9 @@ export const ActionButton: React.FC = () => {
         </IonFabButton>
         <IonFabButton onClick={handleOpenMail}>
           <IonIcon icon={mailOutline} />
+        </IonFabButton>
+        <IonFabButton onClick={handleOpenTwitter}>
+          <IonIcon icon={logoTwitter} />
         </IonFabButton>
         <IonFabButton onClick={() => setConfirmDownload(true)}>
           <IonIcon icon={downloadOutline} />

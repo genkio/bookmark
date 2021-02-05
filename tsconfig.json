@@ -15,7 +15,7 @@
     "noUnusedParameters": true,
     "outDir": "dist",
     "removeComments": true,
-    "rootDir": "src",
+    "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
