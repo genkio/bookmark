@@ -44,11 +44,13 @@ document.arrive(".post-page__supplement--report", function () {
   const url = document.location.href;
   const [id] = url.split("-").slice(-1);
 
+  const [, author] = (
+    document.querySelector("span.user-link__username")?.textContent ?? ""
+  ).split("@");
+
   const post: IPost = {
     ...getBookmarkCommonProps(document),
-    author: document
-      .querySelector(".user-link__name--username")
-      ?.textContent?.trim()!,
+    author: author ?? "",
     content: document.querySelector(".post-page__body")?.textContent?.trim()!,
     id,
     notes: "",

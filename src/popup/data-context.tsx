@@ -58,9 +58,7 @@ export default function AppProvider({
         case "notes":
           return bookmark.notes?.toLowerCase().includes(searchTerm);
         case "tags":
-          return bookmark.tags.some((tag) =>
-            tag.toLowerCase().includes(searchTerm),
-          );
+          return bookmark.tags.some((tag) => tag.toLowerCase() === searchTerm);
         case "title":
           return bookmark.title.toLowerCase().includes(searchTerm);
         default:

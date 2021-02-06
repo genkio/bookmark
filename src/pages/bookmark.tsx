@@ -99,8 +99,8 @@ export const BookmarkPage: React.FC<Props> = ({
   return (
     <PageWrapper action={action} showSearch={false} title="Save">
       <ActivationAlert />
-      {tags}
       {notes}
+      {tags}
       {post}
     </PageWrapper>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import "./app.css";
 import DataProvider from "./data-context";
 import { Routes } from "./routes";
 

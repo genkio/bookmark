@@ -13,6 +13,7 @@ export const Routes: React.FC = () => {
         <Route component={ActivationPage} exact path="/activate" />
         <Route component={BookmarkPage} exact path="/bookmark" />
         <Route component={BookmarkPage} exact path="/bookmark/:id" />
+        <Route component={BookmarksPage} exact path="/tags/:tag" />
         <Route component={NotFoundPage} />
       </Switch>
     </MemoryRouter>

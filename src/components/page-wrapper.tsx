@@ -13,6 +13,7 @@ import {
 } from "@ionic/react";
 import numbro from "numbro";
 import React, { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 import { browser } from "webextension-polyfill-ts";
 import packageJson from "../../package.json";
 import { useData } from "../hooks";
@@ -47,7 +48,7 @@ export const PageWrapper: React.FC<
         <IonToolbar>
           <IonItem lines="none">
             <IonLabel style={{ fontSize: "x-large" }}>
-              {title} {showCount && count}
+              <Link to="/">{title}</Link> {showCount && count}
             </IonLabel>
             <ThemeToggle />
           </IonItem>

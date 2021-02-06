@@ -3,13 +3,7 @@ import React from "react";
 import { useData } from "../hooks";
 import { SearchType } from "../typing";
 
-const searchTypes: SearchType[] = [
-  "author",
-  "content",
-  "notes",
-  "tags",
-  "title",
-];
+const searchTypes: SearchType[] = ["author", "content", "notes", "title"];
 
 export const SearchInput: React.FC = () => {
   const { filterBookmarks, resetFilteredBookmarks } = useData();
