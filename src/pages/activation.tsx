@@ -26,7 +26,7 @@ export const ActivationPage: React.FC = () => {
     <IonAlert
       isOpen={!!message}
       onDidDismiss={() => setMessage("")}
-      header={message === "succeed" ? "Thank You!" : "Activation Error"}
+      header={message === "Succeed" ? "Thank You!" : "Activation Error"}
       message={message}
       buttons={[
         {

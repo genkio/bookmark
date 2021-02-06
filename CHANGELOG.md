@@ -7,3 +7,8 @@
 ## v1.3.1 / 2021-02-06
 
 - Fix issue with navigate from tags route back home
+
+## v1.3.2 / 2021-02-06
+
+- Add entry to activation page
+- Add share to twitter action

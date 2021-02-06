@@ -1,22 +1,17 @@
 import {
-  IonCol,
   IonContent,
-  IonFooter,
-  IonGrid,
   IonHeader,
   IonItem,
   IonLabel,
   IonPage,
-  IonRow,
-  IonText,
   IonToolbar,
 } from "@ionic/react";
 import numbro from "numbro";
 import React, { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { browser } from "webextension-polyfill-ts";
-import packageJson from "../../package.json";
 import { useData } from "../hooks";
+import { Footer } from "./footer";
 import { Hero } from "./hero";
 import { SearchInput } from "./search-input";
 import { ThemeToggle } from "./theme-toggle";
@@ -37,11 +32,6 @@ export const PageWrapper: React.FC<
     </span>
   );
 
-  const handleOpenIndieHackers = () =>
-    browser.tabs.create({
-      url: "https://www.indiehackers.com",
-    });
-
   return (
     <IonPage>
       <IonHeader>
@@ -58,31 +48,15 @@ export const PageWrapper: React.FC<
       {showSearch && <SearchInput />}
       <IonContent>
         {!filteredBookmarks.length ? (
-          <Hero style={{ height: "90%" }}>
+          <Hero>
             <img src={browser.extension.getURL("dinosaur.gif")} />
           </Hero>
         ) : (
           children
         )}
-        <IonGrid>
-          <IonRow>
-            <IonCol size="6">
-              <a onClick={handleOpenIndieHackers} style={{ cursor: "pointer" }}>
-                Indie Hackers
-              </a>
-            </IonCol>
-            <IonCol size="6" className="ion-text-end">
-              <IonText color="medium">Version: {packageJson.version}</IonText>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
       </IonContent>
 
-      {action && (
-        <IonFooter className="ion-no-border">
-          <IonToolbar>{action}</IonToolbar>
-        </IonFooter>
-      )}
+      <Footer action={action} />
     </IonPage>
   );
 };

@@ -78,7 +78,7 @@ export async function activate({
   const message = res.success
     ? res.purchase.refunded || res.purchase.chargebacked
       ? "Refunded or charge backed"
-      : "succeed"
+      : "Succeed"
     : res.message;
 
   return { message, success, timestamp: now };

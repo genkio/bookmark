@@ -9,6 +9,7 @@ import React from "react";
 import { browser } from "webextension-polyfill-ts";
 import {
   caretUp,
+  cardOutline,
   downloadOutline,
   logoTwitter,
   mailOutline,
@@ -17,6 +18,7 @@ import {
 import { EMAIL } from "../constant";
 import { useData } from "../hooks";
 import { Bookmark } from "../typing";
+import { useHistory } from "react-router-dom";
 
 function processContent(content: string | string[] | undefined): string {
   if (!content) return "N/A";
@@ -58,6 +60,8 @@ function downloadCsv(bookmarks: Bookmark[]) {
 }
 
 export const ActionButton: React.FC = () => {
+  const history = useHistory();
+
   const { bookmarks } = useData();
   const [confirmDownload, setConfirmDownload] = React.useState(false);
 
@@ -73,10 +77,20 @@ export const ActionButton: React.FC = () => {
       url: `mailto:Lee<${EMAIL}>?subject=About IH Bookmarks`,
     });
 
-  const handleOpenTwitter = () =>
+  const handleOpenTwitter = () => {
+    const message =
+      "I'm using IH Bookmarks to build up my indie hacking knowledge one bookmark at a time!";
+    const url =
+      "https://chrome.google.com/webstore/detail/ih-bookmarks/fbajbcjjogpjcnkoplgkogkipnbiegbb";
+
     browser.tabs.create({
-      url: "https://twitter.com/tinywebapp",
+      url: `http://twitter.com/share?text=${encodeURIComponent(
+        message,
+      )}&url=${url}&hashtags=indiehackers`,
     });
+  };
+
+  const handleOpenActivation = () => history.push("/activate");
 
   return (
     <IonFab vertical="bottom" horizontal="end" slot="fixed">
@@ -108,6 +122,9 @@ export const ActionButton: React.FC = () => {
         </IonFabButton>
         <IonFabButton onClick={handleOpenTwitter}>
           <IonIcon icon={logoTwitter} />
+        </IonFabButton>
+        <IonFabButton onClick={() => handleOpenActivation()}>
+          <IonIcon icon={cardOutline} />
         </IonFabButton>
         <IonFabButton onClick={() => setConfirmDownload(true)}>
           <IonIcon icon={downloadOutline} />
