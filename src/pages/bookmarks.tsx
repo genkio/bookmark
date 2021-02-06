@@ -24,7 +24,7 @@ export const BookmarksPage: React.FC<Props> = ({
 }) => {
   const history = useHistory();
 
-  const { filterBookmarks, loadData } = useData();
+  const { filterBookmarks, loadData, resetFilteredBookmarks } = useData();
 
   React.useEffect(() => {
     loadData().then(({ bookmarks: [bookmark], isCreate }) => {
@@ -50,7 +50,10 @@ export const BookmarksPage: React.FC<Props> = ({
               <IonButton
                 color="light"
                 fill="outline"
-                onClick={() => history.push("/")}
+                onClick={() => {
+                  resetFilteredBookmarks();
+                  history.push("/");
+                }}
                 size="small"
               >
                 <IonLabel color="dark">{tag}</IonLabel>
