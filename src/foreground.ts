@@ -1,6 +1,7 @@
 import "arrive";
 import { browser } from "webextension-polyfill-ts";
 import { Bookmark, IComment, IMessage, IPost } from "./typing";
+import { Storage } from "./common/storage";
 
 const icon = `
   <svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#4B6681" fill-rule="nonzero">
@@ -34,9 +35,11 @@ const getBookmarkCommonProps = (
   title: document.querySelector(".post-page__title")?.textContent!,
 });
 
-document.arrive(".post-page__supplement--report", function () {
+document.arrive(".post-page__supplement--report", async function () {
+  const { options } = await Storage.getData();
+
   const isExist = !!document.querySelector(".post-page__supplement--bookmark");
-  if (isExist) return;
+  if (isExist || !options.post.enabled) return;
 
   // 'this' refers to the newly created element
   this?.insertAdjacentHTML("afterend", bookmarkButton);
@@ -70,22 +73,23 @@ document.arrive(".post-page__supplement--report", function () {
   );
 });
 
-document.arrive("ol.comment-tree", function () {
+document.arrive("ol.comment-tree", async function () {
+  const { options } = await Storage.getData();
+
+  if (!options.comment.enabled) return;
+
   const comments = document.querySelectorAll(".comment__content");
   const links = document.querySelectorAll(
     "a.footer__date",
   ) as NodeListOf<HTMLAnchorElement>;
   const usernames = document.querySelectorAll(".user-link__name--username");
 
-  // FIXME performance issue
-  if (comments.length >= 100) return;
-
   Array.from(document.querySelectorAll(".footer__action--reply")).map(
     (el, i) => {
       const className = `.footer__action--bookmark-${i}`;
 
       const isExist = !!document.querySelector(className);
-      if (isExist) return;
+      if (isExist || i >= options.comment.limit) return;
 
       el.insertAdjacentHTML("beforebegin", bookmarkCommentButton(i));
 

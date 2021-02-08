@@ -14,11 +14,17 @@ import {
   logoTwitter,
   mailOutline,
   openOutline,
+  settingsOutline,
 } from "ionicons/icons";
 import { EMAIL } from "../constant";
 import { useData } from "../hooks";
 import { Bookmark } from "../typing";
 import { useHistory } from "react-router-dom";
+
+const PROMOTE_MESSAGE =
+  "I'm using IH Bookmarks to build up my indie hacking knowledge one bookmark at a time!";
+const CHROME_WEBSTORE_URL =
+  "https://chrome.google.com/webstore/detail/ih-bookmarks/fbajbcjjogpjcnkoplgkogkipnbiegbb";
 
 function processContent(content: string | string[] | undefined): string {
   if (!content) return "N/A";
@@ -78,15 +84,10 @@ export const ActionButton: React.FC = () => {
     });
 
   const handleOpenTwitter = () => {
-    const message =
-      "I'm using IH Bookmarks to build up my indie hacking knowledge one bookmark at a time!";
-    const url =
-      "https://chrome.google.com/webstore/detail/ih-bookmarks/fbajbcjjogpjcnkoplgkogkipnbiegbb";
-
     browser.tabs.create({
       url: `http://twitter.com/share?text=${encodeURIComponent(
-        message,
-      )}&url=${url}&hashtags=indiehackers`,
+        PROMOTE_MESSAGE,
+      )}&url=${CHROME_WEBSTORE_URL}&hashtags=indiehackers`,
     });
   };
 
@@ -116,6 +117,9 @@ export const ActionButton: React.FC = () => {
       <IonFabList side="top">
         <IonFabButton onClick={handleOpenInTab}>
           <IonIcon icon={openOutline} />
+        </IonFabButton>
+        <IonFabButton onClick={() => history.push("/options")}>
+          <IonIcon icon={settingsOutline} />
         </IonFabButton>
         <IonFabButton onClick={handleOpenMail}>
           <IonIcon icon={mailOutline} />

@@ -1,10 +1,20 @@
 export interface IStorageData {
   bookmarks: Bookmark[];
-  config: IConfig;
   isCreate: boolean;
   isDark: boolean;
   lastActivationReqTs: number;
   licenseKey: string;
+  options: IOptions;
+}
+
+export interface IOptions {
+  comment: {
+    enabled: boolean;
+    limit: number;
+  };
+  post: {
+    enabled: boolean;
+  };
 }
 
 export type SearchType = Extract<
@@ -40,8 +50,4 @@ export interface ISelectOption<T = string> {
   keywords?: string;
   label: string;
   value: T;
-}
-
-export interface IConfig {
-  freeTierLimit: number;
 }

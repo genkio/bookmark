@@ -1,7 +1,9 @@
 import React from "react";
 import { Storage } from "../common/storage";
 import { useLocalStorage } from "../hooks";
-import { Bookmark, IConfig, IStorageData, SearchType } from "../typing";
+import { Bookmark, IStorageData, SearchType } from "../typing";
+
+const FREE_TIER_LIMIT = 3;
 
 interface IDataContext {
   bookmarks: Bookmark[];
@@ -27,18 +29,16 @@ export default function AppProvider({
     "bookmarks",
     [],
   );
-  const [config, setConfig] = React.useState<IConfig>();
   const [filteredBookmarks, setFilteredBookmarks] = React.useState<Bookmark[]>(
     [],
   );
   const [isActivationRequired, setIsActivationRequired] = React.useState(false);
 
   React.useEffect(() => {
-    if (!config) return;
-    if (bookmarks.length > config.freeTierLimit) {
+    if (bookmarks.length > FREE_TIER_LIMIT) {
       setIsActivationRequired(true);
     }
-  }, [bookmarks, config]);
+  }, [bookmarks]);
 
   const deleteBookmark = (bookmark: Bookmark) => {
     const updatedBookmarks = bookmarks.filter(({ id }) => bookmark.id !== id);
@@ -87,22 +87,21 @@ export default function AppProvider({
   const loadData = async () => {
     const {
       bookmarks,
-      config,
       isCreate,
       isDark,
       lastActivationReqTs,
       licenseKey,
+      options,
     } = await Storage.getData();
     setBookmarks(bookmarks);
-    setConfig(config);
     setFilteredBookmarks(bookmarks);
     return {
       bookmarks,
-      config,
       isCreate,
       isDark,
       lastActivationReqTs,
       licenseKey,
+      options,
     };
   };
 

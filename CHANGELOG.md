@@ -12,3 +12,8 @@
 
 - Add entry to activation page
 - Add share to twitter action
+
+## v1.4.0 / 2020-02-08
+
+- Add options page
+- Add header back button

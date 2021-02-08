@@ -40,7 +40,7 @@ export const BookmarksPage: React.FC<Props> = ({
   }, [tag]);
 
   return (
-    <PageWrapper showCount={true} title="IH Bookmarks">
+    <PageWrapper disableBackButton={true} showCount={true} title="IH Bookmarks">
       <ActivationAlert />
 
       {tag && (

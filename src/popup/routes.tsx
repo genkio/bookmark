@@ -4,6 +4,7 @@ import { ActivationPage } from "../pages/activation";
 import { BookmarkPage } from "../pages/bookmark";
 import { BookmarksPage } from "../pages/bookmarks";
 import { NotFoundPage } from "../pages/not-found";
+import { OptionsPage } from "../pages/options";
 
 export const Routes: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ export const Routes: React.FC = () => {
         <Route component={BookmarkPage} exact path="/bookmark" />
         <Route component={BookmarkPage} exact path="/bookmark/:id" />
         <Route component={BookmarksPage} exact path="/tags/:tag" />
+        <Route component={OptionsPage} exact path="/options" />
         <Route component={NotFoundPage} />
       </Switch>
     </MemoryRouter>
