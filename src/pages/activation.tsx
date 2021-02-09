@@ -11,7 +11,7 @@ import { browser } from "webextension-polyfill-ts";
 import { activate } from "../common/activator";
 import { ItemHeader } from "../components/item-header";
 import { PageWrapper } from "../components/page-wrapper";
-import { EMAIL } from "../constant";
+import { EMAIL, PRODUCT_LINK } from "../constant";
 import { useLocalStorage } from "../hooks";
 import { IStorageData } from "../typing";
 
@@ -39,6 +39,11 @@ export const ActivationPage: React.FC = () => {
       ]}
     />
   );
+
+  const handleOpenProductLink = () =>
+    browser.tabs.create({
+      url: PRODUCT_LINK,
+    });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -83,6 +88,18 @@ export const ActivationPage: React.FC = () => {
               }}
             />
           </IonItem>
+          <p className="ion-padding-start">
+            Please consider{" "}
+            <a
+              href="#"
+              onClick={handleOpenProductLink}
+              style={{ textDecoration: "underline" }}
+            >
+              getting a license
+            </a>{" "}
+            (a one-time purchase) to support us.
+          </p>
+
           <IonButton
             disabled={loading || !licenseKey}
             expand="block"

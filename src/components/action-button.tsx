@@ -83,13 +83,12 @@ export const ActionButton: React.FC = () => {
       url: `mailto:Lee<${EMAIL}>?subject=About IH Bookmarks`,
     });
 
-  const handleOpenTwitter = () => {
+  const handleOpenTwitter = () =>
     browser.tabs.create({
       url: `http://twitter.com/share?text=${encodeURIComponent(
         PROMOTE_MESSAGE,
       )}&url=${CHROME_WEBSTORE_URL}&hashtags=indiehackers`,
     });
-  };
 
   const handleOpenActivation = () => history.push("/activate");
 

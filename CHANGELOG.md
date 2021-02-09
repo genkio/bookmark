@@ -17,3 +17,7 @@
 
 - Add options page
 - Add header back button
+
+## v1.4.1 / 2020-02-09
+
+- Add product link in activation page
