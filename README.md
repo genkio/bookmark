@@ -2,6 +2,8 @@
 
 > Third-party solution for bookmarking posts and comments on Indie Hackers
 
+![](./screenshot.png)
+
 ## Getting Started
 
 Run the following commands to install dependencies and start developing
