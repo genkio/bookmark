@@ -9,14 +9,12 @@ const icon = `
   </svg>
 `;
 
-const bookmarkButton = `
-  <button
-    class="post-page__supplement post-page__supplement--bookmark"
-    title="Bookmark a post"
-    onmouseover="this.children[0].style.fill='#ffffff'"
-    onmouseout="this.children[0].style.fill='#4B6681'"
-  >
-    ${icon}
+const bookmarkButtonV2 = `
+  <button class="post-page__admin-action post-page__admin-action--bookmark">
+    <div class="admin-action__button-content">
+      <span style="margin: 0 22px 0 9px">${icon}</span>
+      <p class="admin-action__button-label">Bookmark</p>
+    </div>
   </button>
 `;
 
@@ -35,14 +33,16 @@ const getBookmarkCommonProps = (
   title: document.querySelector(".post-page__title")?.textContent!,
 });
 
-document.arrive(".post-page__supplement--report", async function () {
+document.arrive(".post-page__admin-action--report", async function () {
   const { options } = await Storage.getData();
 
-  const isExist = !!document.querySelector(".post-page__supplement--bookmark");
+  const isExist = !!document.querySelector(
+    ".post-page__admin-action--bookmark",
+  );
   if (isExist || !options.post.enabled) return;
 
   // 'this' refers to the newly created element
-  this?.insertAdjacentHTML("afterend", bookmarkButton);
+  this?.insertAdjacentHTML("afterend", bookmarkButtonV2);
 
   const url = document.location.href;
   const [id] = url.split("-").slice(-1);
@@ -61,16 +61,18 @@ document.arrive(".post-page__supplement--report", async function () {
     url: document.location.href,
   };
 
-  document.querySelector(".post-page__supplement--bookmark")?.addEventListener(
-    "click",
-    async function () {
-      await browser.runtime.sendMessage({
-        bookmark: post,
-        isCreate: true,
-      } as IMessage);
-    },
-    false,
-  );
+  document
+    .querySelector(".post-page__admin-action--bookmark")
+    ?.addEventListener(
+      "click",
+      async function () {
+        await browser.runtime.sendMessage({
+          bookmark: post,
+          isCreate: true,
+        } as IMessage);
+      },
+      false,
+    );
 });
 
 document.arrive("ol.comment-tree", async function () {
@@ -119,17 +121,3 @@ document.arrive("ol.comment-tree", async function () {
     },
   );
 });
-
-/**
- * To retrieve comment content and anchor manually
- *
-// .footer__separator -> .footer__action--collapse -> .footer__separator -> comment anchor
-const commentAnchor = document.querySelectorAll(className)[0]
-  .previousElementSibling?.previousElementSibling?.previousElementSibling
-  ?.previousElementSibling as HTMLAnchorElement;
-const url = commentAnchor.href;
-
-// .comment__footer -> .comment__main -> .comment__content
-const content = document.querySelectorAll(className)[0].parentElement
-  ?.parentElement?.children[0].textContent;
- */

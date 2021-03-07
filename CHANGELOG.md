@@ -21,3 +21,7 @@
 ## v1.4.1 / 2020-02-09
 
 - Add product link in activation page
+
+## v1.4.2 / 2020-03-07
+
+- Fix broken post bookmark button
