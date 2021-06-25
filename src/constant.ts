@@ -1,6 +1,6 @@
-export const EMAIL = "hi.tinywebapp+ih-bookmarks@gmail.com";
+export const EMAIL = "hi.tinywebapp@gmail.com";
 
-export const PRODUCT_LINK = "https://gumroad.com/tinywebapp#lQPybT";
+export const PRODUCT_LINK = "https://gum.co/lQPybT";
 
 export const DEFAULT_OPTIONS = {
   comment: {

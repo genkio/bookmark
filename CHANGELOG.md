@@ -13,15 +13,19 @@
 - Add entry to activation page
 - Add share to twitter action
 
-## v1.4.0 / 2020-02-08
+## v1.4.0 / 2021-02-08
 
 - Add options page
 - Add header back button
 
-## v1.4.1 / 2020-02-09
+## v1.4.1 / 2021-02-09
 
 - Add product link in activation page
 
-## v1.4.2 / 2020-03-07
+## v1.4.2 / 2021-03-07
 
 - Fix broken post bookmark button
+
+## v1.4.3 / 2021-06-25
+
+- Update product link and support email

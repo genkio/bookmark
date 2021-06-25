@@ -85,6 +85,5 @@ export async function activate({
 }
 
 function getPermalink(productLink: string) {
-  const [, permalink] = productLink.split("#");
-  return permalink;
+  return productLink.split("/").pop();
 }

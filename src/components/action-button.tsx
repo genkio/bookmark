@@ -80,7 +80,7 @@ export const ActionButton: React.FC = () => {
 
   const handleOpenMail = () =>
     browser.tabs.create({
-      url: `mailto:Lee<${EMAIL}>?subject=About IH Bookmarks`,
+      url: `mailto:Joe<${EMAIL}>?subject=About IH Bookmarks`,
     });
 
   const handleOpenTwitter = () =>
